@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inherited_widgets/widgets/animated_text.dart';
 
 class CounterText extends StatelessWidget {
   const CounterText({
@@ -17,12 +18,7 @@ class CounterText extends StatelessWidget {
       height: 100,
       width: 100,
       decoration: BoxDecoration(color: _color, shape: BoxShape.circle),
-      child: Center(
-        child: Text(
-          '$_counter',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-      ),
+      child: AnimatedText(counter: _counter),
     );
   }
 }
