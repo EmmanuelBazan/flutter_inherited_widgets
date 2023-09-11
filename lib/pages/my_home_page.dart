@@ -43,9 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             const SizedBox(height: 5),
-            CounterText(
-              counter: _counter,
+            MyHomePageProvider(
               color: _color,
+              counter: _counter,
+              child: const CounterText(),
             ),
           ],
         ),
@@ -56,5 +57,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class MyHomePageProvider extends InheritedWidget {
+  final int counter;
+  final Color color;
+
+  const MyHomePageProvider(
+      {Key? key,
+      required this.color,
+      required this.counter,
+      required Widget child})
+      : super(
+          key: key,
+          child: child,
+        );
+
+  @override
+  bool updateShouldNotify(MyHomePageProvider oldWidget) {
+    return true;
+  }
+
+  static MyHomePageProvider of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<MyHomePageProvider>()!;
   }
 }
