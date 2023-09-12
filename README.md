@@ -20,9 +20,7 @@ Inherited widgets allow you to reach data from the top to the bottom in an easy 
 -  [MyHomeProvider](#homeprovider)
 -  [Access the data of the InheritedWidget](#accessing)
 -  [CounterText accessing MyHomeProvider](#accessingcounter)
--  [AnimatedText accessing MyHomeProvider](#accessinganimated)
-
-<a name="problemstate"/>
+-  [AnimatedText accessing MyHomeProvider](#accessinganimated)<a name="problemstate"/>
 ## Problem statement
 
 We have the basic counter of a new flutter project but with some modifications. Each time you tap in the button the number of taps in the screen increments and the circle color changes randomly.
@@ -55,7 +53,9 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+
 <a name="myhomepage"/>
+
 #### MyHomePage
 
 “MyHomePage” is a StatefulWidget that will handle the state of the counter and the dynamic background color.
@@ -179,9 +179,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 ```
-</details>
-
-<a name="countertext"/>
+</details><a name="countertext"/>
+  
 #### CounterText
 
 The “CounterText” widget is a “StatelesWidget” tha recive like parameters the number of taps and the background color.
@@ -213,6 +212,7 @@ class CounterText extends StatelessWidget {
 ```
 
 <a name="animatedtext"/>
+
 #### AnimatedText
 
 The “AnimatedText” is a “StatelesWidget” that involves the taps number in a “AnimatedSwitcher” widget to animate it each time the value change.
@@ -245,14 +245,14 @@ class AnimatedText extends StatelessWidget {
 ```
 
 <a name="problem"/>
+
 #### Problem
 
 In this application i need to pass my variables “_counter” and ”_color” like parameters through 3 widgets to finally be used, handle this flow with three widgets in my tree could be easy but imagine handle this flow with 10 or more widgets, it becomes a pain for many developper, to solve this im going to implement the “InheritedWidget”.
-
 <a name="implementation"/>
 ## InheritedWidget implementation
-
 <a name="homeprovider"/>
+
 #### MyHomeProvider
 
 First of all, I need to create a class “MyHomeProvider” that will extends from “InheritedWidget”.
@@ -298,11 +298,12 @@ It’s important not to return “true” always, only if it’s necesary visual
     return oldWidget.counter != counter || oldWidget.color != color;
   }
 ```
+
 <a name="accessing"/>
+
 #### Access the data of the InheritedWidget
 
 Once i finish to create the “MyHomeProvider” i don’t need to send my variables “_color” and “_counter” like parameters througth all my widget tree, so i can remove this parameters from the widgets that used to use them.
-
 <a name="accessingcounter"/>
 #### CounterText accessing MyHomeProvider
 
@@ -332,6 +333,7 @@ After get a instance of “MyHomeProvider” now i can access to “color” and
 ```
 
 <a name="accessinganimated"/>
+
 #### AnimatedText accessing MyHomeProvider
 
 Like in the “CounterText” widget we remove the parameters and get an instance of “MyHomeProvider” to access “counter” and use it in “AnimatedText”.
