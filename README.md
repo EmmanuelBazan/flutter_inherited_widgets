@@ -9,7 +9,7 @@ Inherited widgets allow you to reach data from the top to the bottom in an easy 
 
 1. [**Problem statement**]()
 
--  [MyApp]()
+-  [MyApp](#myapp)
 -  [MyHomePage]()
 -  [CounterText]()
 -  [AnimatedText]()
@@ -24,6 +24,7 @@ Inherited widgets allow you to reach data from the top to the bottom in an easy 
 ## Problem statement
 
 We have the basic counter of a new flutter project but with some modifications. Each time you tap in the button the number of taps in the screen increments and the circle color changes randomly.
+<a name="myapp"/>
 #### MyApp
 
 First of all, we have the “MyApp” widget that contains the “MyHomePage” widget.
