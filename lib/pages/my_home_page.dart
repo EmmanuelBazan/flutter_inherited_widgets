@@ -76,7 +76,7 @@ class MyHomePageProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(MyHomePageProvider oldWidget) {
-    return true;
+    return oldWidget.counter != counter || oldWidget.color != color;
   }
 
   static MyHomePageProvider of(BuildContext context) {
