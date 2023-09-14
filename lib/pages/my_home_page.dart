@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_inherited_widgets/global/theme_controller.dart';
+import 'package:flutter_inherited_widgets/stateManager/provider.dart';
 import 'package:flutter_inherited_widgets/widgets/counter_text.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -30,10 +32,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Provider.of<ThemeController>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          Switch(
+              value: themeController.isDarkModeEnabled,
+              onChanged: (_) {
+                themeController.toggleTheme();
+              })
+        ],
       ),
       body: Center(
         child: Column(
