@@ -1,98 +1,55 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_inherited_widgets/global/home_controller.dart';
 import 'package:flutter_inherited_widgets/global/theme_controller.dart';
 import 'package:flutter_inherited_widgets/stateManager/consumer.dart';
+import 'package:flutter_inherited_widgets/stateManager/provider.dart';
 import 'package:flutter_inherited_widgets/widgets/counter_text.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  Color _color = Colors.deepPurple;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-
-      final randomIndex = Random().nextInt(
-        Colors.primaries.length - 1,
-      );
-
-      _color = Colors.primaries[randomIndex];
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // final themeController = Provider.of<ThemeController>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-        actions: [
-          Consumer<ThemeController>(
-            builder: (_, controller) => Switch(
-                value: controller.isDarkModeEnabled,
-                onChanged: (_) {
-                  controller.toggleTheme();
-                }),
-          )
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            const SizedBox(height: 5),
-            MyHomePageProvider(
-              color: _color,
-              counter: _counter,
-              child: const CounterText(),
-            ),
+    return Provider<HomeController>(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(title),
+          actions: [
+            Consumer<ThemeController>(
+              builder: (_, controller) => Switch(
+                  value: controller.isDarkModeEnabled,
+                  onChanged: (_) {
+                    controller.toggleTheme();
+                  }),
+            )
           ],
         ),
+        body: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'You have pushed the button this many times:',
+              ),
+              SizedBox(height: 5),
+              CounterText(),
+            ],
+          ),
+        ),
+        floatingActionButton: Builder(builder: (context) {
+          return FloatingActionButton(
+            onPressed: () {
+              Provider.of<HomeController>(context).incrementCounter();
+            },
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          );
+        }), // This trailing comma makes auto-formatting nicer for build methods.
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      create: () => HomeController(),
     );
-  }
-}
-
-class MyHomePageProvider extends InheritedWidget {
-  final int counter;
-  final Color color;
-
-  const MyHomePageProvider(
-      {Key? key,
-      required this.color,
-      required this.counter,
-      required Widget child})
-      : super(
-          key: key,
-          child: child,
-        );
-
-  @override
-  bool updateShouldNotify(MyHomePageProvider oldWidget) {
-    return oldWidget.counter != counter || oldWidget.color != color;
-  }
-
-  static MyHomePageProvider of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<MyHomePageProvider>()!;
   }
 }

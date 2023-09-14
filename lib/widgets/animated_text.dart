@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inherited_widgets/pages/my_home_page.dart';
+import 'package:flutter_inherited_widgets/global/home_controller.dart';
+import 'package:flutter_inherited_widgets/stateManager/consumer.dart';
 
 class AnimatedText extends StatelessWidget {
   const AnimatedText({
@@ -8,15 +9,15 @@ class AnimatedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeProvider = MyHomePageProvider.of(context);
-
     return Center(
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
-        child: Text(
-          key: UniqueKey(),
-          '${homeProvider.counter}',
-          style: Theme.of(context).textTheme.headlineMedium,
+        child: Consumer<HomeController>(
+          builder: (_, controller) => Text(
+            key: UniqueKey(),
+            '${controller.counter}',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
         ),
       ),
     );
