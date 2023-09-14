@@ -7,6 +7,7 @@ abstract class Notifier {
 
   void notify() {
     for (var listener in _listeners) {
+      //* execute setState
       listener();
     }
   }
